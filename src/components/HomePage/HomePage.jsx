@@ -1,7 +1,7 @@
 export const HomePage = () => {
   return (
     <>
-      <div>Test czy cokolwiek działa</div>
+      <div>Strona widoczna dla zalogowanych użytkowników</div>
     </>
   );
 };
