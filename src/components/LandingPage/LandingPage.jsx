@@ -1,11 +1,17 @@
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 
 export const LandingPage = () => {
   return (
     <>
-    <button>Zaloguj się</button>
-    <button>Zarejestruj się</button>
-    <div>Test czy cokolwiek działa</div>
+      <div>
+        Witaj na stronie Taberu
+        <Link to="/login">
+          <button>Zaloguj się</button>
+        </Link>
+        <Link to="/register">
+          <button>Zarejestruj się</button>
+        </Link>
+      </div>
     </>
-  )
-}
+  );
+};
