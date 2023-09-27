@@ -1,7 +1,8 @@
 export const HomePage = () => {
   return (
     <>
-      <div>Strona widoczna dla zalogowanych użytkowników</div>
+      <div>Jesteś zalogowany</div>
+      <button>Wyloguj</button>
     </>
   );
 };
