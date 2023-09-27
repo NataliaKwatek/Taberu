@@ -1,8 +1,13 @@
+import useAuth from "../../context/AuthContext";
+
 export const HomePage = () => {
+
+const { logout } = useAuth();
+
   return (
     <>
       <div>Jesteś zalogowany</div>
-      <button>Wyloguj</button>
+      <button onClick={logout}>Wyloguj</button>
     </>
   );
 };

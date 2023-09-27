@@ -1,4 +1,4 @@
-import { Navigate } from "react-router-dom";
+import { Navigate, Link } from "react-router-dom";
 import { toast, Toaster } from "react-hot-toast";
 import styles from "./Login.module.css";
 import useAuth from "../../../context/AuthContext";
@@ -35,6 +35,8 @@ export const Login = () => {
           Pokaż hasło
           <button>Zaloguj się</button>
         </form>
+        Nie pamiętasz hasła? 
+        <Link to="/passwordreminder"><button>Zresetuj hasło</button></Link>
         </>
       ) : (
         <Navigate to='/home' />
