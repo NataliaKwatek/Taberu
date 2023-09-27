@@ -1,6 +1,6 @@
 import { sendPasswordResetEmail } from "firebase/auth";
 import { auth } from "../../../config/firebase"
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 export const PasswordReminder = () => {
@@ -32,6 +32,7 @@ export const PasswordReminder = () => {
         <input type="email" name="email" id="email" required />
         <button>Wyślij link</button>
         </form>
+       
     </>
   )
 }

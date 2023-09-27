@@ -6,6 +6,9 @@ import { HomePage } from "./components/HomePage/HomePage";
 import { Login } from "./components/User/Login/Login";
 import { Register } from "./components/User/Register/Register";
 import { PasswordReminder } from "./components/User/PasswordReminder/PasswordReminder";
+import { AddRecipe } from "./components/Recipe/AddRecipe/AddRecipe";
+import { DisplayRecipe } from "./components/Recipe/DisplayRecipe/DisplayRecipe";
+import { MealPlan } from "./components/MealPlan/MealPlan";
 
 function App() {
   return (
@@ -17,6 +20,9 @@ function App() {
 
       <Route element={<PrivateRoute />}>
         <Route path="/home" element={<HomePage />} />
+        <Route path="/display" element={<DisplayRecipe />} />
+        <Route path="/add" element={<AddRecipe />} />
+        <Route path="/mealplan" element={<MealPlan />} />
       </Route>
     </Routes>
   );
