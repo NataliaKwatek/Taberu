@@ -49,7 +49,6 @@ export const Register = () => {
       const newUser = {
         login,
         email,
-        password,
       };
 
       addUserToDatabase(newUser);

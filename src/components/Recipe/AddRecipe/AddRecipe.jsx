@@ -1,5 +1,5 @@
 import useAuth from "../../../context/AuthContext";
-import { auth, db } from "../../../config/firebase";
+import { db } from "../../../config/firebase";
 import { doc, setDoc } from "firebase/firestore";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -24,7 +24,6 @@ export const AddRecipe = () => {
       const description = e.target.description.value;
       const ingredients = ingredient;
       const preparation = e.target.preparation.value;
-
       const newRecipe = doc(db, "Recipes", recipeID);
 
       await setDoc(newRecipe, {
