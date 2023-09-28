@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
 import { db } from "../../../config/firebase";
-import { toast } from "react-hot-toast";
+import { useParams } from "react-router-dom";
 
 export const DisplayRecipe = () => {
   const [recipes, setRecipes] = useState([]);
@@ -15,10 +15,23 @@ export const DisplayRecipe = () => {
     getRecipes();
   }, []);
 
+  const removeRecipe = async (recipeID) => {
+    try {
+      const recipeRef = doc(db, "Recipes", recipeID);
+      await deleteDoc(recipeRef);
+      console.log("Document successfully deleted!");
+        getRecipes()
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   return (
     <>
       <div>Tutaj możesz zobaczyć swoje przepisy </div>
+
       <ul>
+        {recipes.length === 0 && <p>Nie masz jeszcze żadnych przepisów</p>}
         {recipes.map((recipe, i) => (
           <li key={i}>
             <div key={recipe.id}>
@@ -34,6 +47,10 @@ export const DisplayRecipe = () => {
               </div>
               <div>{recipe.preparation}</div>
             </div>
+            <button>Edytuj</button>
+            <button type="button" onClick={()=>removeRecipe(recipe.id)}>
+              Usuń
+            </button>
           </li>
         ))}
       </ul>
