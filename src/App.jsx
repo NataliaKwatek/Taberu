@@ -8,7 +8,9 @@ import { Register } from "./components/User/Register/Register";
 import { PasswordReminder } from "./components/User/PasswordReminder/PasswordReminder";
 import { AddRecipe } from "./components/Recipe/AddRecipe/AddRecipe";
 import { DisplayRecipe } from "./components/Recipe/DisplayRecipe/DisplayRecipe";
+import { EditRecipe } from "./components/Recipe/EditRecipe/EditRecipe"; 
 import { MealPlan } from "./components/MealPlan/MealPlan";
+
 
 function App() {
   return (
@@ -21,6 +23,7 @@ function App() {
       <Route element={<PrivateRoute />}>
         <Route path="/home" element={<HomePage />} />
         <Route path="/display" element={<DisplayRecipe />} />
+        <Route path="/edit/:id" element={<EditRecipe />} />
         <Route path="/add" element={<AddRecipe />} />
         <Route path="/mealplan" element={<MealPlan />} />
       </Route>

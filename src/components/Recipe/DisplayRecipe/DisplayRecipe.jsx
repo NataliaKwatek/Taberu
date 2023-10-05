@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
-import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
+import { collection, getDocs, deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../config/firebase";
 import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export const DisplayRecipe = () => {
   const [recipes, setRecipes] = useState([]);
@@ -47,7 +48,7 @@ export const DisplayRecipe = () => {
               </div>
               <div>{recipe.preparation}</div>
             </div>
-            <button>Edytuj</button>
+            <Link to={`/edit/${recipe.id}`}>Edytuj</Link>
             <button type="button" onClick={()=>removeRecipe(recipe.id)}>
               Usuń
             </button>
