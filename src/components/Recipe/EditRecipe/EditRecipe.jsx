@@ -22,14 +22,11 @@ export const EditRecipe = () => {
 
   const [recipe, setRecipe] = useState([]);
 
- 
-
   const getRecipe = async () => {
     const docRef = doc(db, "Recipes", id);
     const docSnap = await getDoc(docRef);
     setRecipe(docSnap.data());
   };
-
 
   const handleUpdate = async (e) => {
     e.preventDefault();
@@ -39,6 +36,10 @@ export const EditRecipe = () => {
       const description = e.target.description.value;
       const ingredients = recipe.ingredients;
       const preparation = e.target.preparation.value;
+      const calories = e.target.calories.value;
+        const protein = e.target.protein.value;
+        const fat = e.target.fat.value;
+        const carbohydrates = e.target.carbohydrates.value;
       const recipeRef = doc(db, "Recipes", id);
 
       await updateDoc(recipeRef, {
@@ -46,6 +47,10 @@ export const EditRecipe = () => {
         description: description,
         ingredients: ingredients,
         preparation: preparation,
+        calories: calories,
+        protein: protein,
+        fat: fat,
+        carbohydrates: carbohydrates,
       });
 
       console.log("Zaktualizowano przepis w bazie danych");
@@ -57,11 +62,10 @@ export const EditRecipe = () => {
 
   const handleAddNewInt = (e) => {
     e.preventDefault();
-    const updatedRecipe = {...recipe};
-    updatedRecipe.ingredients.push({intName: "", intWeight: ""});
+    const updatedRecipe = { ...recipe };
+    updatedRecipe.ingredients.push({ intName: "", intWeight: "" });
     setRecipe(updatedRecipe);
   };
-
 
   const handleChange = (e, i) => {
     e.preventDefault();
@@ -71,12 +75,11 @@ export const EditRecipe = () => {
   };
 
   const handleDelete = (i) => {
-    const updatedRecipe = {...recipe};
+    const updatedRecipe = { ...recipe };
     updatedRecipe.ingredients.splice(i, 1);
     setRecipe(updatedRecipe);
   };
 
-  
   useEffect(() => {
     getRecipe();
   }, []);
@@ -127,6 +130,35 @@ export const EditRecipe = () => {
           name="preparation"
           id="preparation"
           defaultValue={recipe.preparation}
+        />
+
+        <label htmlFor="calories">Kalorie</label>
+        <input
+          type="number"
+          name="calories"
+          id="calories"
+          defaultValue={recipe.calories}    
+        />
+        <label htmlFor="protein">Białko</label>
+        <input
+          type="number"
+          name="protein"
+          id="protein"
+          defaultValue={recipe.protein}
+        />
+        <label htmlFor="fat">Tłuszcz</label>
+        <input
+          type="number"
+          name="fat"
+          id="fat"
+          defaultValue={recipe.fat}
+        />
+        <label htmlFor="carbohydrates">Węglowodany</label>
+        <input
+          type="number"
+          name="carbohydrates"
+          id="carbohydrates"
+          defaultValue={recipe.carbohydrates}
         />
         <button type="submit">Zapisz zmiany</button>
       </form>

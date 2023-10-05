@@ -24,6 +24,10 @@ export const AddRecipe = () => {
       const description = e.target.description.value;
       const ingredients = ingredient;
       const preparation = e.target.preparation.value;
+      const calories = e.target.calories.value;
+      const protein = e.target.protein.value;
+      const fat = e.target.fat.value;
+      const carbohydrates = e.target.carbohydrates.value;
       const newRecipe = doc(db, "Recipes", recipeID);
 
       await setDoc(newRecipe, {
@@ -31,6 +35,10 @@ export const AddRecipe = () => {
         description: description,
         ingredients: ingredients,
         preparation: preparation,
+        calories: calories,
+        protein: protein,
+        fat: fat,
+        carbohydrates: carbohydrates,
         userID: currentUser.uid,
       });
 
@@ -40,7 +48,6 @@ export const AddRecipe = () => {
       console.log(error.message);
     }
   };
-
 
   const handleClick = () => {
     setIngredient([...ingredient, { intName: "", intWeight: "" }]);
@@ -95,6 +102,17 @@ export const AddRecipe = () => {
         <label htmlFor="preparation">Przygotowanie</label>
         <input type="text" id="preparation" />
         <br />
+        <br />
+        <label htmlFor="makro">Makroskładniki</label>
+        <br />
+        <label htmlFor="calories">Kalorie</label>
+        <input type="number" id="calories" />
+        <label htmlFor="protein">Białko</label>
+        <input type="number" id="protein" />
+        <label htmlFor="fat">Tłuszcze</label>
+        <input type="number" id="fat" />
+        <label htmlFor="carbohydrates">Węglowodany</label>
+        <input type="number" id="carbohydrates" />
         <br />
         <button>Zapisz przepis</button>
       </form>

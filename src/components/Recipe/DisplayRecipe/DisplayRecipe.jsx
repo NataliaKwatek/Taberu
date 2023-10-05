@@ -47,6 +47,10 @@ export const DisplayRecipe = () => {
                 ))}
               </div>
               <div>{recipe.preparation}</div>
+                <div>{recipe.calories}</div>
+                <div>{recipe.protein}</div>
+                <div>{recipe.fat}</div>
+                <div>{recipe.carbohydrates}</div>
             </div>
             <Link to={`/edit/${recipe.id}`}>Edytuj</Link>
             <button type="button" onClick={()=>removeRecipe(recipe.id)}>
