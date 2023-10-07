@@ -9,7 +9,9 @@ import { PasswordReminder } from "./components/User/PasswordReminder/PasswordRem
 import { AddRecipe } from "./components/Recipe/AddRecipe/AddRecipe";
 import { DisplayRecipe } from "./components/Recipe/DisplayRecipe/DisplayRecipe";
 import { EditRecipe } from "./components/Recipe/EditRecipe/EditRecipe"; 
-import { MealPlan } from "./components/MealPlan/MealPlan";
+import { CreateMealPlan } from "./components/MealPlan/CreateMealPlan/CreateMealPlan";
+import { DisplayMealPlan } from "./components/MealPlan/DisplayMealPlan/DisplayMealPlan";
+import { EditMealPlan } from "./components/MealPlan/EditMealPlan/EditMealPlan";
 
 
 function App() {
@@ -25,7 +27,12 @@ function App() {
         <Route path="/display" element={<DisplayRecipe />} />
         <Route path="/edit/:id" element={<EditRecipe />} />
         <Route path="/add" element={<AddRecipe />} />
-        <Route path="/mealplan" element={<MealPlan />} />
+        <Route path="/createplan" element={<CreateMealPlan />} />
+        <Route path="/displayplan" element={<DisplayMealPlan />} />
+        <Route path="/editplan/:id" element={<EditMealPlan />} />
+
+        <Route path="*" element={<HomePage />} />
+
       </Route>
     </Routes>
   );
