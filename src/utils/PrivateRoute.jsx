@@ -1,6 +1,7 @@
 import { Outlet, Navigate, useLocation } from 'react-router-dom';
 import useAuth from '../context/AuthContext';
 
+
 const PrivateRoute = () => {
 	const location = useLocation();
 	const { currentUser } = useAuth();
