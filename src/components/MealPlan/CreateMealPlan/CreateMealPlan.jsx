@@ -16,6 +16,8 @@ import { v4 as uuidv4 } from "uuid";
 export const CreateMealPlan = () => {
   const [recipes, setRecipes] = useState([]);
 
+  const navigate = useNavigate();
+
   const getRecipesToSelect = async () => {
     const data = await getDocs(collection(db, "Recipes"));
     setRecipes(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
@@ -153,6 +155,7 @@ export const CreateMealPlan = () => {
 
       console.log("Zapisano plan w bazie danych");
       e.target.reset();
+      navigate("/displayplan")
     } catch (error) {
       console.log(error.message);
     }
