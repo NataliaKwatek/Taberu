@@ -37,9 +37,9 @@ export const EditRecipe = () => {
       const ingredients = recipe.ingredients;
       const preparation = e.target.preparation.value;
       const calories = e.target.calories.value;
-        const protein = e.target.protein.value;
-        const fat = e.target.fat.value;
-        const carbohydrates = e.target.carbohydrates.value;
+      const protein = e.target.protein.value;
+      const fat = e.target.fat.value;
+      const carbohydrates = e.target.carbohydrates.value;
       const recipeRef = doc(db, "Recipes", id);
 
       await updateDoc(recipeRef, {
@@ -90,6 +90,7 @@ export const EditRecipe = () => {
       <form onSubmit={handleUpdate}>
         <label htmlFor="name">Nazwa przepisu</label>
         <input type="text" name="name" id="name" defaultValue={recipe.name} />
+        
         <label htmlFor="description">Opis przepisu</label>
         <input
           type="text"
@@ -137,7 +138,7 @@ export const EditRecipe = () => {
           type="number"
           name="calories"
           id="calories"
-          defaultValue={recipe.calories}    
+          defaultValue={recipe.calories}
         />
         <label htmlFor="protein">Białko</label>
         <input
@@ -147,12 +148,7 @@ export const EditRecipe = () => {
           defaultValue={recipe.protein}
         />
         <label htmlFor="fat">Tłuszcz</label>
-        <input
-          type="number"
-          name="fat"
-          id="fat"
-          defaultValue={recipe.fat}
-        />
+        <input type="number" name="fat" id="fat" defaultValue={recipe.fat} />
         <label htmlFor="carbohydrates">Węglowodany</label>
         <input
           type="number"
