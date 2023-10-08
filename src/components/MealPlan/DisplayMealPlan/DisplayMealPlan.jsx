@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 export const DisplayMealPlan = () => {
   const [mealPlans, setMealPlans] = useState([]);
   const [recipes, setRecipes] = useState([]);
+  
 
   const getMealPlans = async () => {
     const data = await getDocs(collection(db, "MealPlans"));
@@ -30,11 +31,9 @@ export const DisplayMealPlan = () => {
 
   useEffect(() => {
     getRecipes();
-  }, []);
-
-  useEffect(() => {
     getMealPlans();
   }, []);
+
 
   const findRecipeNameById = (id) => {
     const recipe = recipes.find((recipe) => recipe.id === id);
@@ -45,6 +44,8 @@ export const DisplayMealPlan = () => {
     }
   };
 
+
+ 
   return (
     <>
       <div>Sprawdź stworzone plany: </div>
@@ -60,6 +61,11 @@ export const DisplayMealPlan = () => {
               <div>Podwieczorek: {findRecipeNameById(mealPlan.tea)}</div>
               <div>Kolacja: {findRecipeNameById(mealPlan.supper)}</div>
               <div>Przekąska: {findRecipeNameById(mealPlan.snack)}</div>
+              <div>Kalorie: {mealPlan.nutritionSummary.calories}</div>
+              <div>B: {mealPlan.nutritionSummary.protein}</div>
+              <div>T: {mealPlan.nutritionSummary.fat}</div>
+              <div>W: {mealPlan.nutritionSummary.carbohydrates}</div>
+
             </div>
             <button type="button">
               <Link to={`/editplan/${mealPlan.id}`}>Edytuj</Link>
