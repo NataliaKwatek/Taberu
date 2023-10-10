@@ -61,7 +61,7 @@ export const Register = () => {
 
   return (
     <>
-   
+    <Toaster />
       <h2>Zarejestruj się </h2>
 
       <form onSubmit={handleRegister}>
@@ -95,7 +95,7 @@ export const Register = () => {
         Pokaż hasło
         <button>Zarejestruj się</button>
       </form>
-      <Toaster />
+     
     </>
   );
 };

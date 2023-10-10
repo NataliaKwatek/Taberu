@@ -3,7 +3,7 @@ import { db } from "../../../config/firebase";
 import { doc, setDoc } from "firebase/firestore";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-hot-toast";
+import { toast, Toaster } from "react-hot-toast";
 import { v4 as uuidv4 } from "uuid";
 
 export const AddRecipe = () => {
@@ -30,6 +30,10 @@ export const AddRecipe = () => {
       const carbohydrates = e.target.carbohydrates.value;
       const newRecipe = doc(db, "Recipes", recipeID);
 
+      if (calories < 0 || protein < 0 || fat < 0 || carbohydrates < 0) {
+        throw new Error("Wartości nie mogą być ujemne");
+      }
+
       await setDoc(newRecipe, {
         name: name,
         description: description,
@@ -42,10 +46,10 @@ export const AddRecipe = () => {
         userID: currentUser.uid,
       });
 
-      toast("Zapisano przepis w bazie danych");
+      toast.success("Zapisano przepis w bazie danych");
       navigate("/display");
     } catch (error) {
-      console.log(error.message);
+      toast.error(error.message);
     }
   };
 
@@ -67,6 +71,7 @@ export const AddRecipe = () => {
 
   return (
     <>
+    <Toaster />
       <div>Tutaj możesz dodać swój przepis</div>
       <form onSubmit={addRecipeToDatabase}>
         <label htmlFor="name">Nazwa przepisu</label>
@@ -106,13 +111,13 @@ export const AddRecipe = () => {
         <label htmlFor="makro">Makroskładniki</label>
         <br />
         <label htmlFor="calories">Kalorie</label>
-        <input type="number" id="calories" />
+        <input type="number" id="calories" required/>
         <label htmlFor="protein">Białko</label>
-        <input type="number" id="protein" />
+        <input type="number" id="protein" required />
         <label htmlFor="fat">Tłuszcze</label>
-        <input type="number" id="fat" />
+        <input type="number" id="fat" required />
         <label htmlFor="carbohydrates">Węglowodany</label>
-        <input type="number" id="carbohydrates" />
+        <input type="number" id="carbohydrates" required />
         <br />
         <button>Zapisz przepis</button>
       </form>

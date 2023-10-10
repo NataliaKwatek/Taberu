@@ -1,7 +1,7 @@
 import { sendPasswordResetEmail } from "firebase/auth";
 import { auth } from "../../../config/firebase"
 import { useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
+import { toast, Toaster } from "react-hot-toast";
 
 export const PasswordReminder = () => {
 
@@ -24,6 +24,7 @@ export const PasswordReminder = () => {
 
   return (
     <>
+    <Toaster />
     Przypomnij hasło
     <form onSubmit={handlePasswordReset}>
     <p>Podaj adres email, na który wyślemy link do zresetowania hasła</p>

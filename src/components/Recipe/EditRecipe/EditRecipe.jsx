@@ -1,19 +1,9 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import {
-  doc,
-  updateDoc,
-  getDoc,
-  collection,
-  query,
-  where,
-  documentId,
-  getDocs,
-} from "firebase/firestore";
+import { doc, updateDoc, getDoc } from "firebase/firestore";
 import { db } from "../../../config/firebase";
-import { ref } from "@firebase/storage";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-hot-toast";
+import { toast, Toaster } from "react-hot-toast";
 
 export const EditRecipe = () => {
   const navigate = useNavigate();
@@ -42,6 +32,10 @@ export const EditRecipe = () => {
       const carbohydrates = e.target.carbohydrates.value;
       const recipeRef = doc(db, "Recipes", id);
 
+      if (calories < 0 || protein < 0 || fat < 0 || carbohydrates < 0) {
+        throw new Error("Wartości nie mogą być ujemne");
+      }
+
       await updateDoc(recipeRef, {
         name: name,
         description: description,
@@ -53,10 +47,10 @@ export const EditRecipe = () => {
         carbohydrates: carbohydrates,
       });
 
-      console.log("Zaktualizowano przepis w bazie danych");
+      toast.success("Zaktualizowano przepis w bazie danych");
       navigate("/display");
     } catch (error) {
-      console.log(error.message);
+      toast.error(error.message);
     }
   };
 
@@ -86,11 +80,12 @@ export const EditRecipe = () => {
 
   return (
     <>
+      <Toaster />
       <div>Tutaj możesz edytować przepisy</div>
       <form onSubmit={handleUpdate}>
         <label htmlFor="name">Nazwa przepisu</label>
         <input type="text" name="name" id="name" defaultValue={recipe.name} />
-        
+
         <label htmlFor="description">Opis przepisu</label>
         <input
           type="text"

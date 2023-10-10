@@ -17,7 +17,7 @@ import { EditMealPlan } from "./components/MealPlan/EditMealPlan/EditMealPlan";
 function App() {
   return (
     <Routes>
-      <Route path="/*" element={<LandingPage />} />
+      <Route path="/" element={<LandingPage />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/passwordreminder" element={<PasswordReminder />} />
@@ -30,10 +30,10 @@ function App() {
         <Route path="/createplan" element={<CreateMealPlan />} />
         <Route path="/displayplan" element={<DisplayMealPlan />} />
         <Route path="/editplan/:id" element={<EditMealPlan />} />
-
-        <Route path="*" element={<HomePage />} />
-
       </Route>
+
+      <Route path="*" element={<HomePage />} />
+
     </Routes>
   );
 }
