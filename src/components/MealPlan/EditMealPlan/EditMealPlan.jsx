@@ -49,8 +49,6 @@ export const EditMealPlan = () => {
       };
       const mealPlanRef = doc(db, "MealPlans", id);
 
-      console.log(breakfast);
-
       await updateDoc(mealPlanRef, {
         date: date,
         breakfast: breakfast,

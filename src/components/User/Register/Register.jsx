@@ -20,7 +20,7 @@ export const Register = () => {
       if (auth.currentUser) {
         const docRef = doc(db, "Users", auth.currentUser.uid);
         await setDoc(docRef, newUser);
-        toast("Zapisano użytkownika w bazie danych");
+        toast("Rejestracja przebiegła pomyślnie");
         navigate("/home");
       }
     } catch (error) {
@@ -53,10 +53,9 @@ export const Register = () => {
       };
 
       addUserToDatabase(newUser);
-
       e.target.reset();
     } catch (error) {
-      console.log(error.message);
+      toast(error.message);
     }
   };
 
