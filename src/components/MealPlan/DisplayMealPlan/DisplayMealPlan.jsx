@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
 import { db } from "../../../config/firebase";
 import { Link } from "react-router-dom";
+import findRecipeNameById from "../../../utils/findRecipeNameById";
 
 export const DisplayMealPlan = () => {
   const [mealPlans, setMealPlans] = useState([]);
@@ -35,17 +36,6 @@ export const DisplayMealPlan = () => {
   }, []);
 
 
-  const findRecipeNameById = (id) => {
-    const recipe = recipes.find((recipe) => recipe.id === id);
-    if (recipe) {
-      return recipe.name;
-    } else {
-      return "Posiłek nie został wybrany";
-    }
-  };
-
-
- 
   return (
     <>
       <div>Sprawdź stworzone plany: </div>
@@ -55,12 +45,12 @@ export const DisplayMealPlan = () => {
           <li key={i}>
             <div key={mealPlan.id}>
               <div>Data: {mealPlan.date}</div>
-              <div>Śniadanie: {findRecipeNameById(mealPlan.breakfast)}</div>
-              <div>II Śniadanie: {findRecipeNameById(mealPlan.secondBreakfast)}</div>
-              <div>Obiad: {findRecipeNameById(mealPlan.dinner)}</div>
-              <div>Podwieczorek: {findRecipeNameById(mealPlan.tea)}</div>
-              <div>Kolacja: {findRecipeNameById(mealPlan.supper)}</div>
-              <div>Przekąska: {findRecipeNameById(mealPlan.snack)}</div>
+              <div>Śniadanie: {findRecipeNameById(mealPlan.breakfast, recipes)}</div>
+              <div>II Śniadanie: {findRecipeNameById(mealPlan.secondBreakfast, recipes)}</div>
+              <div>Obiad: {findRecipeNameById(mealPlan.dinner, recipes)}</div>
+              <div>Podwieczorek: {findRecipeNameById(mealPlan.tea, recipes)}</div>
+              <div>Kolacja: {findRecipeNameById(mealPlan.supper, recipes)}</div>
+              <div>Przekąska: {findRecipeNameById(mealPlan.snack, recipes)}</div>
               <div>Kalorie: {mealPlan.nutritionSummary.calories}</div>
               <div>B: {mealPlan.nutritionSummary.protein}</div>
               <div>T: {mealPlan.nutritionSummary.fat}</div>
