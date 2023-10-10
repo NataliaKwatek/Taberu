@@ -3,13 +3,13 @@ import { useState, useEffect } from "react";
 import {
   doc,
   updateDoc,
-  getDoc,
 } from "firebase/firestore";
 import { db } from "../../../config/firebase";
 import { toast } from "react-hot-toast";
 import calculateNutritionSummary from "../../../utils/calculateNutritionSummary";
 import findRecipeNameById from "../../../utils/findRecipeNameById";
 import getRecipesToSelect from "../../../utils/getRecipesToSelect";
+import getMealPlan from "./getMealPlan";
 
 export const EditMealPlan = () => {
   const { id } = useParams();
@@ -17,12 +17,6 @@ export const EditMealPlan = () => {
 
   const [recipes, setRecipes] = useState([]);
   const [mealPlan, setMealPlan] = useState([]);
-
-  const getMealPlan = async () => {
-    const docRef = doc(db, "MealPlans", id);
-    const docSnap = await getDoc(docRef);
-    setMealPlan(docSnap.data());
-  };
 
   const [nutritionSummary, setNutritionSummary] = useState({
     calories: 0,
@@ -76,7 +70,7 @@ export const EditMealPlan = () => {
 
   useEffect(() => {
     getRecipesToSelect(setRecipes);
-    getMealPlan();
+    getMealPlan(setMealPlan, id);
   }, []);
 
   const handleChange = (e) => {
