@@ -12,6 +12,8 @@ import {
 } from "firebase/firestore";
 import { db } from "../../../config/firebase";
 import { toast } from "react-hot-toast";
+import calculateNutritionSummary from "../../../utils/calculateNutritionSummary";
+import findRecipeNameById from "../../../utils/findRecipeNameById";
 
 
 export const EditMealPlan = () => {
@@ -32,6 +34,17 @@ export const EditMealPlan = () => {
     setRecipes(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
   }
 
+  const [nutritionSummary, setNutritionSummary] = useState({
+    calories: 0,
+    protein: 0,
+    fat: 0,
+    carbohydrates: 0,
+  });
+
+  useEffect(() => {
+    calculateNutritionSummary(mealPlan, recipes, setNutritionSummary);
+  }, [mealPlan]);
+
   const handleUpdatedMealPlan = async (e) => {
     e.preventDefault();
 
@@ -43,6 +56,12 @@ export const EditMealPlan = () => {
       const tea = e.target.tea.value;
       const supper = e.target.supper.value;
       const snack = e.target.snack.value;
+      const nutritionSummaryUpdated = {
+        calories: nutritionSummary.calories,
+        protein: nutritionSummary.protein,
+        fat: nutritionSummary.fat,
+        carbohydrates: nutritionSummary.carbohydrates,
+      }
       const mealPlanRef = doc(db, "MealPlans", id);
 
         console.log(breakfast);
@@ -55,6 +74,7 @@ export const EditMealPlan = () => {
         tea: tea,
         supper: supper,
         snack: snack,
+        nutritionSummary: nutritionSummaryUpdated,
       });
 
       console.log("Zaktualizowano plan w bazie danych");
@@ -77,15 +97,6 @@ const handleChange = (e) => {
   }));
 };
 
-  const findRecipeNameById = (id) => {
-    const recipe = recipes.find((recipe) => recipe.id === id);
-    if (recipe) {
-      return recipe.name;
-    } else {
-      return "Posiłek nie został wybrany";
-    }
-  };
-
   return (
     <>
       <div>Edytuj plan: </div>
@@ -97,6 +108,7 @@ const handleChange = (e) => {
 
         <label htmlFor="breakfast">Śniadanie: </label>
         <select name="breakfast" id="breakfast" value={mealPlan.breakfast} onChange={(e) => handleChange(e)}>
+        <option defaultValue={findRecipeNameById(mealPlan.breakfast, recipes)}>{findRecipeNameById(mealPlan.breakfast, recipes)}</option>
           {recipes.map((recipe) =>  (
             <option key={recipe.id} value={recipe.id} >{`${recipe.name}` + ", " + `${recipe.calories}` + " kalorii"}</option>
           ))}
@@ -105,7 +117,7 @@ const handleChange = (e) => {
 
         <label htmlFor="secondBreakfast">II Śniadanie: </label>
         <select name="secondBreakfast" id="secondBreakfast" value={mealPlan.secondBreakfast} onChange={(e) => handleChange(e)}>
-        <option defaultValue={findRecipeNameById(mealPlan.secondBreakfast)}>{findRecipeNameById(mealPlan.secondBreakfast)}</option>
+        <option defaultValue={findRecipeNameById(mealPlan.secondBreakfast, recipes)}>{findRecipeNameById(mealPlan.secondBreakfast, recipes)}</option>
           {recipes.map((recipe) => (
             <option key={recipe.id} value={recipe.id}>{`${recipe.name}` + ", " + `${recipe.calories}` + " kalorii"}</option>
           ))}
@@ -113,7 +125,7 @@ const handleChange = (e) => {
 
         <label htmlFor="dinner">Obiad: </label>
         <select name="dinner" id="dinner" value={mealPlan.dinner} onChange={(e) => handleChange(e)}>
-        <option defaultValue={findRecipeNameById(mealPlan.dinner)}>{findRecipeNameById(mealPlan.dinner)}</option>
+        <option defaultValue={findRecipeNameById(mealPlan.dinner, recipes)}>{findRecipeNameById(mealPlan.dinner, recipes)}</option>
           {recipes.map((recipe) => (
             <option key={recipe.id} value={recipe.id}>{`${recipe.name}` + ", " + `${recipe.calories}` + " kalorii"}</option>
           ))}
@@ -121,7 +133,7 @@ const handleChange = (e) => {
 
         <label htmlFor="tea">Podwieczorek: </label>
         <select name="tea" id="tea" value={mealPlan.tea} onChange={(e) => handleChange(e)}>
-        <option defaultValue={findRecipeNameById(mealPlan.tea)}>{findRecipeNameById(mealPlan.tea)}</option>
+        <option defaultValue={findRecipeNameById(mealPlan.tea, recipes)}>{findRecipeNameById(mealPlan.tea, recipes)}</option>
           {recipes.map((recipe) => (
             <option key={recipe.id} value={recipe.id}>{`${recipe.name}` + ", " + `${recipe.calories}` + " kalorii"}</option>
           ))}
@@ -129,7 +141,7 @@ const handleChange = (e) => {
 
         <label htmlFor="supper">Kolacja: </label>
         <select name="supper" id="supper" value={mealPlan.supper} onChange={(e) => handleChange(e)}>
-        <option defaultValue={findRecipeNameById(mealPlan.supper)}>{findRecipeNameById(mealPlan.supper)}</option>
+        <option defaultValue={findRecipeNameById(mealPlan.supper, recipes)}>{findRecipeNameById(mealPlan.supper, recipes)}</option>
           {recipes.map((recipe) => (
             <option key={recipe.id} value={recipe.id}>{`${recipe.name}` + ", " + `${recipe.calories}` + " kalorii"}</option>
           ))}
@@ -137,7 +149,7 @@ const handleChange = (e) => {
 
         <label htmlFor="snack">Przekąska: </label>
         <select name="snack" id="snack" value={mealPlan.snack} onChange={(e) => handleChange(e)}>
-        <option defaultValue={findRecipeNameById(mealPlan.snack)}>{findRecipeNameById(mealPlan.snack)}</option>
+        <option defaultValue={findRecipeNameById(mealPlan.snack, recipes)}>{findRecipeNameById(mealPlan.snack, recipes)}</option>
           {recipes.map((recipe) => (
             <option key={recipe.id} value={recipe.id}>{`${recipe.name}` + ", " + `${recipe.calories}` + " kalorii"}</option>
           ))}
