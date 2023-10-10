@@ -9,7 +9,6 @@ export const DisplayMealPlan = () => {
   const [mealPlans, setMealPlans] = useState([]);
   const [recipes, setRecipes] = useState([]);
   
-
   const getMealPlans = async () => {
     const data = await getDocs(collection(db, "MealPlans"));
     setMealPlans(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
@@ -19,7 +18,6 @@ export const DisplayMealPlan = () => {
     const data = await getDocs(collection(db, "Recipes"));
     setRecipes(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
   };
-
 
   useEffect(() => {
     getRecipes();
