@@ -1,4 +1,5 @@
 import "./App.css";
+import { Toaster } from "react-hot-toast";
 import { Route, Routes } from "react-router-dom";
 import PrivateRoute from "./utils/PrivateRoute";
 import { LandingPage } from "./components/LandingPage/LandingPage";
@@ -16,6 +17,8 @@ import { EditMealPlan } from "./components/MealPlan/EditMealPlan/EditMealPlan";
 
 function App() {
   return (
+    <>
+    <Toaster />
     <Routes>
       <Route path="/" element={<LandingPage />} />
       <Route path="/login" element={<Login />} />
@@ -35,6 +38,7 @@ function App() {
       <Route path="*" element={<HomePage />} />
 
     </Routes>
+    </>
   );
 }
 
