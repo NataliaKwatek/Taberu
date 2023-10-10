@@ -1,15 +1,16 @@
 import { db } from "../../../config/firebase";
 import { doc, deleteDoc } from "firebase/firestore";
+import { toast } from "react-hot-toast";
 
-const removeRecipe = async (recipeID, getRecipes) => {
+  const removeRecipe = async (id, getRecipes, userID) => {
     try {
-      const recipeRef = doc(db, "Recipes", recipeID);
+      const recipeRef = doc(db, "Recipes", id);
       await deleteDoc(recipeRef);
-      console.log("Document successfully deleted!");
-        getRecipes()
+      toast("Document successfully deleted!");
+      getRecipes(userID);
     } catch (error) {
-      console.log(error.message);
+      toast.error("Error removing document: ", error);
     }
-  };
+  }
 
   export default removeRecipe;

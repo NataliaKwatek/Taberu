@@ -1,21 +1,26 @@
+import useAuth from "../../../context/AuthContext";
 import { useState, useEffect } from "react";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, where, query } from "firebase/firestore";
 import { db } from "../../../config/firebase";
 import { Link } from "react-router-dom";
 import removeRecipe from "./removeRecipe";
 
 export const DisplayRecipe = () => {
+  const { currentUser } = useAuth();
+
+  const userID = currentUser.uid;
+
   const [recipes, setRecipes] = useState([]);
 
-  const getRecipes = async () => {
-    const data = await getDocs(collection(db, "Recipes"));
+  const getRecipes = async (userID) => {
+    const q = query(collection(db, "Recipes"), where("userID", "==", userID));
+    const data = await getDocs(q);
     setRecipes(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
   };
 
   useEffect(() => {
-    getRecipes();
-  }, []);
-
+    getRecipes(userID);
+  }, [recipes]);
 
   return (
     <>
@@ -37,13 +42,16 @@ export const DisplayRecipe = () => {
                 ))}
               </div>
               <div>{recipe.preparation}</div>
-                <div>Kalorie: {recipe.calories}</div>
-                <div>Białko: {recipe.protein}</div>
-                <div>Tłuszcze: {recipe.fat}</div>
-                <div>Węglowodany: {recipe.carbohydrates}</div>
+              <div>Kalorie: {recipe.calories}</div>
+              <div>Białko: {recipe.protein}</div>
+              <div>Tłuszcze: {recipe.fat}</div>
+              <div>Węglowodany: {recipe.carbohydrates}</div>
             </div>
             <Link to={`/edit/${recipe.id}`}>Edytuj</Link>
-            <button type="button" onClick={()=>removeRecipe(recipe.id, getRecipes)}>
+            <button
+              type="button"
+              onClick={() => removeRecipe(recipe.id, getRecipes, userID)}
+            >
               Usuń
             </button>
           </li>

@@ -1,3 +1,4 @@
+import useAuth from "../../../context/AuthContext";
 import { db } from "../../../config/firebase";
 import {
   doc,
@@ -12,6 +13,7 @@ import calculateNutritionSummary from "../../../utils/calculateNutritionSummary"
 import getRecipesToSelect from "../../../utils/getRecipesToSelect";
 
 export const CreateMealPlan = () => {
+  const { currentUser } = useAuth();
   const [recipes, setRecipes] = useState([]);
 
   const navigate = useNavigate();
@@ -74,6 +76,7 @@ export const CreateMealPlan = () => {
         supper: supper,
         snack: snack,
         nutritionSummary: nutritionSummaryTemp,
+        userID: currentUser.uid,
       });
 
       console.log("Zapisano plan w bazie danych");
