@@ -2,10 +2,6 @@ import { db } from "../../../config/firebase";
 import {
   doc,
   setDoc,
-  collection,
-  deleteDoc,
-  query,
-  getDocs,
 } from "firebase/firestore";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -13,19 +9,15 @@ import { toast } from "react-hot-toast";
 import { Link } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import calculateNutritionSummary from "../../../utils/calculateNutritionSummary";
+import getRecipesToSelect from "../../../utils/getRecipesToSelect";
 
 export const CreateMealPlan = () => {
   const [recipes, setRecipes] = useState([]);
 
   const navigate = useNavigate();
 
-  const getRecipesToSelect = async () => {
-    const data = await getDocs(collection(db, "Recipes"));
-    setRecipes(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-  };
-
   useEffect(() => {
-    getRecipesToSelect();
+    getRecipesToSelect(setRecipes);
   }, []);
 
   const mealPlanID = uuidv4();

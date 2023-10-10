@@ -4,17 +4,12 @@ import {
   doc,
   updateDoc,
   getDoc,
-  collection,
-  query,
-  where,
-  documentId,
-  getDocs,
 } from "firebase/firestore";
 import { db } from "../../../config/firebase";
 import { toast } from "react-hot-toast";
 import calculateNutritionSummary from "../../../utils/calculateNutritionSummary";
 import findRecipeNameById from "../../../utils/findRecipeNameById";
-
+import getRecipesToSelect from "../../../utils/getRecipesToSelect";
 
 export const EditMealPlan = () => {
   const { id } = useParams();
@@ -28,11 +23,6 @@ export const EditMealPlan = () => {
     const docSnap = await getDoc(docRef);
     setMealPlan(docSnap.data());
   };
-
-  const getRecipesToSelect = async () => {
-    const data = await getDocs(collection(db, "Recipes"));
-    setRecipes(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-  }
 
   const [nutritionSummary, setNutritionSummary] = useState({
     calories: 0,
@@ -61,10 +51,10 @@ export const EditMealPlan = () => {
         protein: nutritionSummary.protein,
         fat: nutritionSummary.fat,
         carbohydrates: nutritionSummary.carbohydrates,
-      }
+      };
       const mealPlanRef = doc(db, "MealPlans", id);
 
-        console.log(breakfast);
+      console.log(breakfast);
 
       await updateDoc(mealPlanRef, {
         date: date,
@@ -82,84 +72,143 @@ export const EditMealPlan = () => {
     } catch (error) {
       console.log(error.message);
     }
-  }
+  };
 
   useEffect(() => {
-    getRecipesToSelect();
+    getRecipesToSelect(setRecipes);
     getMealPlan();
-}, []);
+  }, []);
 
-const handleChange = (e) => {
-  const { name, value } = e.target;
-  setMealPlan((prevState) => ({
-    ...prevState,
-    [name]: value,
-  }));
-};
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setMealPlan((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
 
   return (
     <>
       <div>Edytuj plan: </div>
 
       <form onSubmit={handleUpdatedMealPlan}>
-
         <label htmlFor="date">Data: </label>
-        <input type="date" id="date" name="date" defaultValue={mealPlan.date} required />
+        <input
+          type="date"
+          id="date"
+          name="date"
+          defaultValue={mealPlan.date}
+          required
+        />
 
         <label htmlFor="breakfast">Śniadanie: </label>
-        <select name="breakfast" id="breakfast" value={mealPlan.breakfast} onChange={(e) => handleChange(e)}>
-        <option defaultValue={findRecipeNameById(mealPlan.breakfast, recipes)}>{findRecipeNameById(mealPlan.breakfast, recipes)}</option>
-          {recipes.map((recipe) =>  (
-            <option key={recipe.id} value={recipe.id} >{`${recipe.name}` + ", " + `${recipe.calories}` + " kalorii"}</option>
+        <select
+          name="breakfast"
+          id="breakfast"
+          value={mealPlan.breakfast}
+          onChange={(e) => handleChange(e)}
+        >
+          <option
+            defaultValue={findRecipeNameById(mealPlan.breakfast, recipes)}
+          >
+            {findRecipeNameById(mealPlan.breakfast, recipes)}
+          </option>
+          {recipes.map((recipe) => (
+            <option key={recipe.id} value={recipe.id}>
+              {`${recipe.name}` + ", " + `${recipe.calories}` + " kalorii"}
+            </option>
           ))}
-
         </select>
 
         <label htmlFor="secondBreakfast">II Śniadanie: </label>
-        <select name="secondBreakfast" id="secondBreakfast" value={mealPlan.secondBreakfast} onChange={(e) => handleChange(e)}>
-        <option defaultValue={findRecipeNameById(mealPlan.secondBreakfast, recipes)}>{findRecipeNameById(mealPlan.secondBreakfast, recipes)}</option>
+        <select
+          name="secondBreakfast"
+          id="secondBreakfast"
+          value={mealPlan.secondBreakfast}
+          onChange={(e) => handleChange(e)}
+        >
+          <option
+            defaultValue={findRecipeNameById(mealPlan.secondBreakfast, recipes)}
+          >
+            {findRecipeNameById(mealPlan.secondBreakfast, recipes)}
+          </option>
           {recipes.map((recipe) => (
-            <option key={recipe.id} value={recipe.id}>{`${recipe.name}` + ", " + `${recipe.calories}` + " kalorii"}</option>
+            <option key={recipe.id} value={recipe.id}>
+              {`${recipe.name}` + ", " + `${recipe.calories}` + " kalorii"}
+            </option>
           ))}
         </select>
 
         <label htmlFor="dinner">Obiad: </label>
-        <select name="dinner" id="dinner" value={mealPlan.dinner} onChange={(e) => handleChange(e)}>
-        <option defaultValue={findRecipeNameById(mealPlan.dinner, recipes)}>{findRecipeNameById(mealPlan.dinner, recipes)}</option>
+        <select
+          name="dinner"
+          id="dinner"
+          value={mealPlan.dinner}
+          onChange={(e) => handleChange(e)}
+        >
+          <option defaultValue={findRecipeNameById(mealPlan.dinner, recipes)}>
+            {findRecipeNameById(mealPlan.dinner, recipes)}
+          </option>
           {recipes.map((recipe) => (
-            <option key={recipe.id} value={recipe.id}>{`${recipe.name}` + ", " + `${recipe.calories}` + " kalorii"}</option>
+            <option key={recipe.id} value={recipe.id}>
+              {`${recipe.name}` + ", " + `${recipe.calories}` + " kalorii"}
+            </option>
           ))}
         </select>
 
         <label htmlFor="tea">Podwieczorek: </label>
-        <select name="tea" id="tea" value={mealPlan.tea} onChange={(e) => handleChange(e)}>
-        <option defaultValue={findRecipeNameById(mealPlan.tea, recipes)}>{findRecipeNameById(mealPlan.tea, recipes)}</option>
+        <select
+          name="tea"
+          id="tea"
+          value={mealPlan.tea}
+          onChange={(e) => handleChange(e)}
+        >
+          <option defaultValue={findRecipeNameById(mealPlan.tea, recipes)}>
+            {findRecipeNameById(mealPlan.tea, recipes)}
+          </option>
           {recipes.map((recipe) => (
-            <option key={recipe.id} value={recipe.id}>{`${recipe.name}` + ", " + `${recipe.calories}` + " kalorii"}</option>
+            <option key={recipe.id} value={recipe.id}>
+              {`${recipe.name}` + ", " + `${recipe.calories}` + " kalorii"}
+            </option>
           ))}
         </select>
 
         <label htmlFor="supper">Kolacja: </label>
-        <select name="supper" id="supper" value={mealPlan.supper} onChange={(e) => handleChange(e)}>
-        <option defaultValue={findRecipeNameById(mealPlan.supper, recipes)}>{findRecipeNameById(mealPlan.supper, recipes)}</option>
+        <select
+          name="supper"
+          id="supper"
+          value={mealPlan.supper}
+          onChange={(e) => handleChange(e)}
+        >
+          <option defaultValue={findRecipeNameById(mealPlan.supper, recipes)}>
+            {findRecipeNameById(mealPlan.supper, recipes)}
+          </option>
           {recipes.map((recipe) => (
-            <option key={recipe.id} value={recipe.id}>{`${recipe.name}` + ", " + `${recipe.calories}` + " kalorii"}</option>
+            <option key={recipe.id} value={recipe.id}>
+              {`${recipe.name}` + ", " + `${recipe.calories}` + " kalorii"}
+            </option>
           ))}
         </select>
 
         <label htmlFor="snack">Przekąska: </label>
-        <select name="snack" id="snack" value={mealPlan.snack} onChange={(e) => handleChange(e)}>
-        <option defaultValue={findRecipeNameById(mealPlan.snack, recipes)}>{findRecipeNameById(mealPlan.snack, recipes)}</option>
+        <select
+          name="snack"
+          id="snack"
+          value={mealPlan.snack}
+          onChange={(e) => handleChange(e)}
+        >
+          <option defaultValue={findRecipeNameById(mealPlan.snack, recipes)}>
+            {findRecipeNameById(mealPlan.snack, recipes)}
+          </option>
           {recipes.map((recipe) => (
-            <option key={recipe.id} value={recipe.id}>{`${recipe.name}` + ", " + `${recipe.calories}` + " kalorii"}</option>
+            <option key={recipe.id} value={recipe.id}>
+              {`${recipe.name}` + ", " + `${recipe.calories}` + " kalorii"}
+            </option>
           ))}
         </select>
 
-
-     
-
-     <button type="submit">Zapisz zmiany</button>
-     </form>
+        <button type="submit">Zapisz zmiany</button>
+      </form>
     </>
   );
 };
