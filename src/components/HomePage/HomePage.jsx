@@ -1,5 +1,4 @@
 import useAuth from "../../context/AuthContext";
-import { Toaster } from "react-hot-toast";
 import { Link } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import { Navigate } from "react-router-dom";
@@ -15,7 +14,6 @@ const user = currentUser;
     <>
    {user ? (
      <>
-      <Toaster />
       <div>Witaj {user.email}</div>
       <button onClick={logout}>Wyloguj</button>
       <button><Link to="/display">Przepisy</Link></button>
@@ -26,7 +24,6 @@ const user = currentUser;
      </>
    ) : (
      <>
-      <Toaster />
       <Navigate to="/login" />
      </>
    )
