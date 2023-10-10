@@ -5,7 +5,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { db } from "../../../config/firebase";
-import { toast } from "react-hot-toast";
+// import { toast } from "react-hot-toast";
 import calculateNutritionSummary from "../../../utils/calculateNutritionSummary";
 import findRecipeNameById from "../../../utils/findRecipeNameById";
 import getRecipesToSelect from "../../../utils/getRecipesToSelect";
@@ -200,6 +200,11 @@ export const EditMealPlan = () => {
             </option>
           ))}
         </select>
+
+        <div>Kalorie: {nutritionSummary.calories}</div>
+        <div>Białko: {nutritionSummary.protein}</div>
+        <div>Tłuszcze: {nutritionSummary.fat}</div>
+        <div>Węglowodany: {nutritionSummary.carbohydrates}</div>
 
         <button type="submit">Zapisz zmiany</button>
       </form>
