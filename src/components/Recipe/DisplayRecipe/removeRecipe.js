@@ -6,10 +6,10 @@ import { toast } from "react-hot-toast";
     try {
       const recipeRef = doc(db, "Recipes", id);
       await deleteDoc(recipeRef);
-      toast("Document successfully deleted!");
+      toast("Przepis usunięty");
       getRecipes(userID);
     } catch (error) {
-      toast.error("Error removing document: ", error);
+      toast.error("Wystąpił błąd: ", error);
     }
   }
 

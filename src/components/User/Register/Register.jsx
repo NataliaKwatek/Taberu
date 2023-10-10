@@ -7,7 +7,8 @@ import {
   showPassword,
   showPasswordConfirm,
 } from "../../../utils/ShowPasswords";
-import { Toaster, toast } from "react-hot-toast";
+import { toast } from "react-hot-toast";
+
 
 export const Register = () => {
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ export const Register = () => {
       if (error.code === "auth/email-already-in-use") {
         toast.error("Użytkownik już istnieje");
       } else {
-        console.log(error.message);
+        toast.error(error.message);
       }
     }
   };
@@ -61,7 +62,7 @@ export const Register = () => {
 
   return (
     <>
-    <Toaster />
+    
       <h2>Zarejestruj się </h2>
 
       <form onSubmit={handleRegister}>

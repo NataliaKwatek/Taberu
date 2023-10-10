@@ -1,5 +1,4 @@
 import { Navigate, Link } from "react-router-dom";
-import { toast, Toaster } from "react-hot-toast";
 import styles from "./Login.module.css";
 import useAuth from "../../../context/AuthContext";
 import { showPassword } from "../../../utils/ShowPasswords";
@@ -22,7 +21,7 @@ export const Login = () => {
 
   return (
     <>
-      <Toaster />
+
       {!currentUser ? (
         <>
         <h2>Zaloguj się</h2>

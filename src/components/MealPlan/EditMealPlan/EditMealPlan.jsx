@@ -10,6 +10,7 @@ import calculateNutritionSummary from "../../../utils/calculateNutritionSummary"
 import findRecipeNameById from "../../../utils/findRecipeNameById";
 import getRecipesToSelect from "../../../utils/getRecipesToSelect";
 import getMealPlan from "./getMealPlan";
+import { toast } from "react-hot-toast";
 
 export const EditMealPlan = () => {
   const { id } = useParams();
@@ -61,10 +62,10 @@ export const EditMealPlan = () => {
         nutritionSummary: nutritionSummaryUpdated,
       });
 
-      console.log("Zaktualizowano plan w bazie danych");
+      toast.success("Zaktualizowano plan w bazie danych");
       navigate("/displayplan");
     } catch (error) {
-      console.log(error.message);
+      toast.error(error.message);
     }
   };
 

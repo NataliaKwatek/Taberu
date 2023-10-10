@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { doc, updateDoc, getDoc } from "firebase/firestore";
 import { db } from "../../../config/firebase";
 import { useNavigate } from "react-router-dom";
-import { toast, Toaster } from "react-hot-toast";
+import { toast } from "react-hot-toast";
 
 export const EditRecipe = () => {
   const navigate = useNavigate();
@@ -80,7 +80,7 @@ export const EditRecipe = () => {
 
   return (
     <>
-      <Toaster />
+ 
       <div>Tutaj możesz edytować przepisy</div>
       <form onSubmit={handleUpdate}>
         <label htmlFor="name">Nazwa przepisu</label>

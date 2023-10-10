@@ -1,3 +1,4 @@
+import { toast } from "react-hot-toast";
 import useAuth from "../../../context/AuthContext";
 import { db } from "../../../config/firebase";
 import {
@@ -6,7 +7,6 @@ import {
 } from "firebase/firestore";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast, Toaster } from "react-hot-toast";
 // import { Link } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import calculateNutritionSummary from "../../../utils/calculateNutritionSummary";
@@ -79,11 +79,11 @@ export const CreateMealPlan = () => {
         userID: currentUser.uid,
       });
 
-      toast.success("Zapisano plan w bazie danych");
+      toast("Zapisano plan w bazie danych");
       e.target.reset();
       navigate("/displayplan");
     } catch (error) {
-      toast.error(error.message);
+      toast(error.message);
     }
   };
 
@@ -98,7 +98,7 @@ export const CreateMealPlan = () => {
 
   return (
     <>
-    <Toaster />
+   
       <div>Tutaj stworzysz swój plan posiłków</div>
       <form onSubmit={addMealPlanToDataBase}>
         <label htmlFor="date">Wybierz datę</label>

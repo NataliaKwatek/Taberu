@@ -3,7 +3,7 @@ import { db } from "../../../config/firebase";
 import { doc, setDoc } from "firebase/firestore";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast, Toaster } from "react-hot-toast";
+import { toast } from "react-hot-toast";
 import { v4 as uuidv4 } from "uuid";
 
 export const AddRecipe = () => {
@@ -69,9 +69,9 @@ export const AddRecipe = () => {
     setIngredient(deleteVal);
   };
 
+
   return (
     <>
-    <Toaster />
       <div>Tutaj możesz dodać swój przepis</div>
       <form onSubmit={addRecipeToDatabase}>
         <label htmlFor="name">Nazwa przepisu</label>
