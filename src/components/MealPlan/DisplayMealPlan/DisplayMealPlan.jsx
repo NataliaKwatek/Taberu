@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../../config/firebase";
 import { Link } from "react-router-dom";
 import findRecipeNameById from "../../../utils/findRecipeNameById";
+import removeMealPlan from "./removeMealPlan";
 
 export const DisplayMealPlan = () => {
   const [mealPlans, setMealPlans] = useState([]);
@@ -19,16 +20,6 @@ export const DisplayMealPlan = () => {
     setRecipes(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
   };
 
-  const removeMealPlan = async (mealPlanID) => {
-    try {
-      const mealPlanRef = doc(db, "MealPlans", mealPlanID);
-      await deleteDoc(mealPlanRef);
-      console.log("Document successfully deleted!");
-      getMealPlans();
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
 
   useEffect(() => {
     getRecipes();
@@ -60,7 +51,7 @@ export const DisplayMealPlan = () => {
             <button type="button">
               <Link to={`/editplan/${mealPlan.id}`}>Edytuj</Link>
             </button>
-            <button type="button" onClick={() => removeMealPlan(mealPlan.id)}>
+            <button type="button" onClick={() => removeMealPlan(mealPlan.id, getMealPlans)}>
               Usuń
             </button>
           </li>

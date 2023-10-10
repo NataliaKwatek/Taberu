@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../../config/firebase";
-import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import removeRecipe from "./removeRecipe";
 
 export const DisplayRecipe = () => {
   const [recipes, setRecipes] = useState([]);
@@ -16,16 +16,6 @@ export const DisplayRecipe = () => {
     getRecipes();
   }, []);
 
-  const removeRecipe = async (recipeID) => {
-    try {
-      const recipeRef = doc(db, "Recipes", recipeID);
-      await deleteDoc(recipeRef);
-      console.log("Document successfully deleted!");
-        getRecipes()
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
 
   return (
     <>
@@ -53,7 +43,7 @@ export const DisplayRecipe = () => {
                 <div>Węglowodany: {recipe.carbohydrates}</div>
             </div>
             <Link to={`/edit/${recipe.id}`}>Edytuj</Link>
-            <button type="button" onClick={()=>removeRecipe(recipe.id)}>
+            <button type="button" onClick={()=>removeRecipe(recipe.id, getRecipes)}>
               Usuń
             </button>
           </li>
