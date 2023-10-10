@@ -111,7 +111,7 @@ export const EditMealPlan = () => {
             <option key={recipe.id} value={recipe.id}>
               {`${recipe.name}` + ", " + `${recipe.calories}` + " kalorii"}
             </option>
-          ))}
+          ))} <option>Brak</option>
         </select>
 
         <label htmlFor="secondBreakfast">II Śniadanie: </label>
@@ -131,6 +131,7 @@ export const EditMealPlan = () => {
               {`${recipe.name}` + ", " + `${recipe.calories}` + " kalorii"}
             </option>
           ))}
+          <option>Brak</option>
         </select>
 
         <label htmlFor="dinner">Obiad: </label>
@@ -148,6 +149,7 @@ export const EditMealPlan = () => {
               {`${recipe.name}` + ", " + `${recipe.calories}` + " kalorii"}
             </option>
           ))}
+          <option>Brak</option>
         </select>
 
         <label htmlFor="tea">Podwieczorek: </label>
@@ -165,6 +167,7 @@ export const EditMealPlan = () => {
               {`${recipe.name}` + ", " + `${recipe.calories}` + " kalorii"}
             </option>
           ))}
+          <option>Brak</option>
         </select>
 
         <label htmlFor="supper">Kolacja: </label>
@@ -182,6 +185,7 @@ export const EditMealPlan = () => {
               {`${recipe.name}` + ", " + `${recipe.calories}` + " kalorii"}
             </option>
           ))}
+          <option>Brak</option>
         </select>
 
         <label htmlFor="snack">Przekąska: </label>
@@ -199,6 +203,7 @@ export const EditMealPlan = () => {
               {`${recipe.name}` + ", " + `${recipe.calories}` + " kalorii"}
             </option>
           ))}
+          <option>Brak</option>
         </select>
 
         <div>Kalorie: {nutritionSummary.calories}</div>
