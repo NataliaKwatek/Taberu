@@ -1,6 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,100;9..40,200;9..40,300;9..40,400;9..40,500;9..40,700;9..40,800&display=swap');
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'DM Sans', sans-serif;
+  list-style: none;
+  text-decoration: none;
+}
 body {
-  background-image: linear-gradient(to right top, #1c1e56, #252c67, #2d3a79, #36498c, #3e599e, #3e5dac, #3e61b9, #3f65c7, #415bd1, #4b4fd8, #5c3edc, #7123dd);
+  background-image: linear-gradient(to right top, #1d565c, #477175, #6c8e90, #92abac, #b9c9c9);
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
+
+
+  border: 1px solid red;
+
+  overflow: hidden;
+}
+
+
+@media (max-width: 1191px) {
+  body {
+   overflow: auto;
+  }
+
 }
