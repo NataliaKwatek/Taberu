@@ -2,7 +2,6 @@ import { Navigate, Link } from "react-router-dom";
 import styles from "./Login.module.css";
 import useAuth from "../../../context/AuthContext";
 import { showPassword } from "../../../utils/ShowPasswords";
-import userIcon from "../../../assets/user.svg";
 import passwordIcon from "../../../assets/password.svg";
 import mailIcon from "../../../assets/mail.svg";
 import webIcon from "../../../assets/icon-web-food.svg";
@@ -49,6 +48,7 @@ export const Login = () => {
                   />
                   <img src={mailIcon} alt="ikona maila" />
                 </div>
+
                 <div className={styles.input_box}>
                   <label htmlFor="password"></label>
                   <input
@@ -72,6 +72,7 @@ export const Login = () => {
                 <button type="submit" className={styles.login_button}>
                   Zaloguj się
                 </button>
+                
                 <div className={styles.register_link}>
                   <p>
                     Nie masz konta? <Link to="/register">Zarejestruj się</Link>
