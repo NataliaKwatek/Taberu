@@ -83,7 +83,7 @@
 
 .wrapper .show_forgot {
   display: flex;
-  justify-content: space-between;
+  justify-content: right;
   font-size: 15px;
   margin: -15px 0 15px;
 }

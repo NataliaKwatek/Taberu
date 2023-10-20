@@ -3,6 +3,7 @@ import styles from "./Login.module.css";
 import useAuth from "../../../context/AuthContext";
 import { showPassword } from "../../../utils/ShowPasswords";
 import passwordIcon from "../../../assets/password.svg";
+import openPasswordIcon from "../../../assets/open-password.svg";
 import mailIcon from "../../../assets/mail.svg";
 import webIcon from "../../../assets/icon-web-food.svg";
 
@@ -58,21 +59,24 @@ export const Login = () => {
                     placeholder="Hasło"
                     required
                   />
-                  <img src={passwordIcon} alt="ikona hasła" />
+                  <div onClick={showPassword} className={styles.pass_icons}>
+        <img src={passwordIcon} alt="ikona hasła" id="closed" className={styles.closed}/>
+        <img src={openPasswordIcon} alt="ikona pokazanego hasła" id="open_pass" className={styles.open_password_icon} />
+        </div>
                 </div>
 
                 <div className={styles.show_forgot}>
-                  <label>
+                  {/* <label>
                     <input type="checkbox" onClick={showPassword} />
                     Pokaż hasło
-                  </label>
+                  </label> */}
                   <Link to="/passwordreminder">Przypomnij hasło</Link>
                 </div>
 
                 <button type="submit" className={styles.login_button}>
                   Zaloguj się
                 </button>
-                
+
                 <div className={styles.register_link}>
                   <p>
                     Nie masz konta? <Link to="/register">Zarejestruj się</Link>
