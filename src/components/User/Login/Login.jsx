@@ -6,6 +6,7 @@ import passwordIcon from "../../../assets/password.svg";
 import openPasswordIcon from "../../../assets/open-password.svg";
 import mailIcon from "../../../assets/mail.svg";
 import webIcon from "../../../assets/icon-web-food.svg";
+import toast from "react-hot-toast";
 
 export const Login = () => {
   const { currentUser, login } = useAuth();
@@ -19,9 +20,13 @@ export const Login = () => {
     try {
       await login(email, password);
     } catch (error) {
-      console.log(error.message);
+      if (error.code === "auth/invalid-login-credentials") {
+      toast.error("Nieprawidłowy login lub hasło");
+    } else {
+      toast.error(error.message);
     }
-  };
+  }
+};
 
   return (
     <>
