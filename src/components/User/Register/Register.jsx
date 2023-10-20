@@ -42,7 +42,7 @@ export const Register = () => {
     e.preventDefault();
 
     try {
-      const login = e.target.name.value;
+      const login = e.target.login.value;
       const email = e.target.email.value;
       const password = e.target.password.value;
       const password_confirm = e.target.password_confirm.value;
@@ -54,8 +54,8 @@ export const Register = () => {
       await register(email, password);
 
       const newUser = {
-        login,
-        email,
+        login: login,
+        email : email,
       };
 
       addUserToDatabase(newUser);
@@ -83,8 +83,8 @@ export const Register = () => {
       <form onSubmit={handleRegister}>
       
       <div className={styles.input_box}>
-        <label htmlFor="name"></label>
-        <input type="text" id="name" name="name" placeholder="Login" required/>
+        <label htmlFor="login"></label>
+        <input type="text" id="login" name="login" placeholder="Login" required/>
         <img src={userIcon} alt="ikona użytkownika" />
         
       </div>
