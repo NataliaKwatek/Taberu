@@ -1,17 +1,22 @@
 import { useEffect, useState } from "react";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, where, query } from "firebase/firestore";
 import { db } from "../../../config/firebase";
 import { Link } from "react-router-dom";
 import findRecipeNameById from "../../../utils/findRecipeNameById";
 import removeMealPlan from "./removeMealPlan";
+import useAuth from "../../../context/AuthContext";
 
 export const DisplayMealPlan = () => {
   const [mealPlans, setMealPlans] = useState([]);
   const [recipes, setRecipes] = useState([]);
   
-  const getMealPlans = async () => {
-    const data = await getDocs(collection(db, "MealPlans"));
-    setMealPlans(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+  const { currentUser } = useAuth();  
+  const userID = currentUser.uid;
+
+  const getMealPlans = async (userID) => {
+    const q = query(collection(db, "MealPlans"), where("userID", "==", userID));
+    const querySnapshot = await getDocs(q);
+    setMealPlans(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
   };
 
   const getRecipes = async () => {
@@ -21,7 +26,7 @@ export const DisplayMealPlan = () => {
 
   useEffect(() => {
     getRecipes();
-    getMealPlans();
+    getMealPlans(userID);
   }, []);
 
 
