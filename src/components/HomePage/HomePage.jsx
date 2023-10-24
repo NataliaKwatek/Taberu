@@ -31,8 +31,10 @@ export const HomePage = () => {
   };
 
   useEffect(() => {
-    getUser();
-  }, []);
+    if (currentUser) {
+      getUser(currentUser.uid, setUser);
+    }
+  }, [currentUser]);
 
   return (
     <>
@@ -88,7 +90,7 @@ export const HomePage = () => {
         </>
       ) : (
         <>
-          <Navigate to="/login" />
+          <Navigate to="/" />
         </>
       )}
     </>
