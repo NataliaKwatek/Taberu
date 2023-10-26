@@ -8,7 +8,9 @@ import { Login } from "./components/User/Login/Login";
 import { Register } from "./components/User/Register/Register";
 import { PasswordReminder } from "./components/User/PasswordReminder/PasswordReminder";
 import { AddRecipe } from "./components/Recipe/AddRecipe/AddRecipe";
+import { Recipes } from "./components/Recipe/Recipes/Recipes";
 import { DisplayRecipe } from "./components/Recipe/DisplayRecipe/DisplayRecipe";
+import { DisplayAll } from "./components/Recipe/DisplayRecipe/DisplayAll";
 import { EditRecipe } from "./components/Recipe/EditRecipe/EditRecipe"; 
 import { CreateMealPlan } from "./components/MealPlan/CreateMealPlan/CreateMealPlan";
 import { DisplayMealPlan } from "./components/MealPlan/DisplayMealPlan/DisplayMealPlan";
@@ -27,7 +29,9 @@ function App() {
 
       <Route element={<PrivateRoute />}>
         <Route path="/home" element={<HomePage />} />
+        <Route path="/recipes" element={<Recipes />} />
         <Route path="/display" element={<DisplayRecipe />} />
+        <Route path="/displayall" element={<DisplayAll />} />
         <Route path="/edit/:id" element={<EditRecipe />} />
         <Route path="/add" element={<AddRecipe />} />
         <Route path="/createplan" element={<CreateMealPlan />} />
