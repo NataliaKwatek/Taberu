@@ -1,4 +1,5 @@
 import { toast } from "react-hot-toast";
+import { Link } from "react-router-dom";
 import useAuth from "../../../context/AuthContext";
 import { db } from "../../../config/firebase";
 import {
@@ -81,7 +82,7 @@ export const CreateMealPlan = () => {
 
       toast("Zapisano plan w bazie danych");
       e.target.reset();
-      navigate("/displayplan");
+      navigate("/createplan");
     } catch (error) {
       toast(error.message);
     }
@@ -187,7 +188,7 @@ export const CreateMealPlan = () => {
         <button type="submit">Zapisz plan</button>
       </form>
 
-      <button type="button">Dodaj następny dzień</button>
+      <Link to="/displayplan"><button type="button">Twoje plany</button></Link>
     </>
   );
 };

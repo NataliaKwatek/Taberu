@@ -9,7 +9,7 @@ import useAuth from "../../../context/AuthContext";
 export const DisplayMealPlan = () => {
   const [mealPlans, setMealPlans] = useState([]);
   const [recipes, setRecipes] = useState([]);
-  
+
   const { currentUser } = useAuth();  
   const userID = currentUser.uid;
 
@@ -25,8 +25,8 @@ export const DisplayMealPlan = () => {
   };
 
   useEffect(() => {
-    getRecipes();
     getMealPlans(userID);
+    getRecipes();
   }, []);
 
 
@@ -54,7 +54,7 @@ export const DisplayMealPlan = () => {
             <button type="button">
               <Link to={`/editplan/${mealPlan.id}`}>Edytuj</Link>
             </button>
-            <button type="button" onClick={() => removeMealPlan(mealPlan.id, getMealPlans)}>
+            <button type="button" onClick={() => removeMealPlan(mealPlan.id, getMealPlans, userID)}>
               Usuń
             </button>
           </li>

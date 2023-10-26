@@ -1,0 +1,13 @@
+.type {
+
+	padding: 4px 8px;
+
+	border-radius: 8px;
+
+	background-color: transparent;
+}
+
+
+.type_selected {
+	background-color: red;
+}

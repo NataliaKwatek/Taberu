@@ -9,6 +9,7 @@
   list-style: none;
   text-decoration: none;
 }
+
 body {
   background-image: linear-gradient(to right top, #1d565c, #477175, #6c8e90, #92abac, #b9c9c9);
   background-repeat: no-repeat;
@@ -18,7 +19,7 @@ body {
 
   border: 1px solid red;
 
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 
