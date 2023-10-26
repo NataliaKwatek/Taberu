@@ -1,7 +1,8 @@
 import useAuth from "../../context/AuthContext";
+import { getUserData } from "../../utils/getUserData"
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Outlet } from "react-router-dom";
+// import { Outlet } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../config/firebase";
@@ -17,24 +18,32 @@ export const HomePage = () => {
   const { logout } = useAuth();
 
   const { currentUser } = useAuth();
+  const [user, setUser] = useState();
 
-  const [user, setUser] = useState([]);
 
-  const getUser = async () => {
-    const docRef = doc(db, "Users", currentUser.uid);
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
-      setUser(docSnap.data());
-    } else {
-      toast.error("Błąd bazy danych");
-    }
-  };
+useEffect(() => {
+  if (currentUser) {
+    getUserData(currentUser.uid, setUser);
+  }
+}, [currentUser]);
 
-  useEffect(() => {
-    if (currentUser) {
-      getUser(currentUser.uid, setUser);
-    }
-  }, [currentUser]);
+
+
+  // const getUser = async () => {
+  //   const docRef = doc(db, "Users", currentUser.uid);
+  //   const docSnap = await getDoc(docRef);
+  //   if (docSnap.exists()) {
+  //     setUser(docSnap.data());
+  //   } else {
+  //     toast.error("Błąd bazy danych");
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   if (currentUser) {
+  //     getUser(currentUser.uid, setUser);
+  //   }
+  // }, [currentUser]);
 
   return (
     <>
@@ -55,7 +64,7 @@ export const HomePage = () => {
           <div className={styles.wrapper}>
             <div className={styles.menu_container}>
 
-              <Link to="/display" className={styles.menu_title}>
+              <Link to="/recipes" className={styles.menu_title}>
                 <div className={styles.menu_tile}>
                   <img src={recipeIcon} />
                   <span>Przepisy</span>
@@ -85,14 +94,9 @@ export const HomePage = () => {
 
             </div>
           </div>
-
-          <Outlet />
         </>
-      ) : (
-        <>
-          <Navigate to="/" />
-        </>
-      )}
+      ) : 
+    null}
     </>
   );
 };
