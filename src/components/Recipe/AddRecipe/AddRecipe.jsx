@@ -5,6 +5,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { v4 as uuidv4 } from "uuid";
+import styles from "./AddRecipe.module.css";
+import typesData from "../Types/types.json";
+import Types from "../Types/Types";
 
 export const AddRecipe = () => {
   const { currentUser } = useAuth();
@@ -16,27 +19,33 @@ export const AddRecipe = () => {
     { intName: "", intWeight: "" },
   ]);
 
+  const [selectedTypes, setSelectedTypes] = useState([]);
+
   const addRecipeToDatabase = async (e) => {
     e.preventDefault();
 
     try {
       const name = e.target.name.value;
-      const description = e.target.description.value;
+      // const description = e.target.description.value;
+      const types = selectedTypes;
       const ingredients = ingredient;
       const preparation = e.target.preparation.value;
       const calories = e.target.calories.value;
       const protein = e.target.protein.value;
       const fat = e.target.fat.value;
       const carbohydrates = e.target.carbohydrates.value;
-      const newRecipe = doc(db, "Recipes", recipeID);
+      // const newRecipe = doc(db, "Recipes", recipeID);
 
       if (calories < 0 || protein < 0 || fat < 0 || carbohydrates < 0) {
         throw new Error("Wartości nie mogą być ujemne");
       }
 
-      await setDoc(newRecipe, {
+      const newRecipeRef = doc(db, "Recipes", recipeID);
+
+      await setDoc(newRecipeRef, {
         name: name,
-        description: description,
+        // description: description,
+        types: types,
         ingredients: ingredients,
         preparation: preparation,
         calories: calories,
@@ -45,6 +54,7 @@ export const AddRecipe = () => {
         carbohydrates: carbohydrates,
         userID: currentUser.uid,
       });
+
 
       toast.success("Zapisano przepis w bazie danych");
       navigate("/display");
@@ -77,8 +87,26 @@ export const AddRecipe = () => {
         <label htmlFor="name">Nazwa przepisu</label>
         <input type="text" id="name" required />
 
-        <label htmlFor="description">Opis przepisu</label>
-        <input type="text" id="description" required />
+        {/* <label htmlFor="description">Opis przepisu</label>
+        <input type="text" id="description" required /> */}
+
+
+
+     <div className={styles.types_container}>
+							<legend>Kategoria</legend>
+							<label htmlFor='types'>
+								Wybierz typ posiłku
+                <br />
+                Możesz wybrać kilka opcji
+							</label>
+							<Types
+								types={typesData}
+								selectedTypes={selectedTypes}
+								setSelectedTypes={setSelectedTypes}
+							/>
+						</div>
+
+
 
         <label htmlFor="ingredients">Składniki</label>
         <button type="button" onClick={handleClick}>
