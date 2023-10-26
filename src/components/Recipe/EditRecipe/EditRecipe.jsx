@@ -4,33 +4,46 @@ import { doc, updateDoc, getDoc } from "firebase/firestore";
 import { db } from "../../../config/firebase";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
+import styles from "./EditRecipe.module.css";
+import typesData from "../Types/types.json";
+import Types from "../Types/Types";
 
 export const EditRecipe = () => {
   const navigate = useNavigate();
 
   const { id } = useParams();
-
   const [recipe, setRecipe] = useState([]);
+  const [selectedTypes, setSelectedTypes] = useState([]);
+  const recipeRef = doc(db, "Recipes", id);
 
   const getRecipe = async () => {
-    const docRef = doc(db, "Recipes", id);
-    const docSnap = await getDoc(docRef);
-    setRecipe(docSnap.data());
+    try {
+      const recipeSnapshot = await getDoc(recipeRef);
+
+      if (recipeSnapshot.exists()) {
+        const recipeFilteredData = recipeSnapshot.data();
+        setRecipe(recipeFilteredData);
+        setSelectedTypes(recipeFilteredData.types);
+      } else {
+        console.log("No such document!");
+      }
+    } catch (error) {
+      console.log("wypisuje błąd:", error);
+    }
   };
 
   const handleUpdate = async (e) => {
     e.preventDefault();
-
     try {
       const name = e.target.name.value;
-      const description = e.target.description.value;
+      const types = selectedTypes;
+      // const description = e.target.description.value;
       const ingredients = recipe.ingredients;
       const preparation = e.target.preparation.value;
       const calories = e.target.calories.value;
       const protein = e.target.protein.value;
       const fat = e.target.fat.value;
       const carbohydrates = e.target.carbohydrates.value;
-      const recipeRef = doc(db, "Recipes", id);
 
       if (calories < 0 || protein < 0 || fat < 0 || carbohydrates < 0) {
         throw new Error("Wartości nie mogą być ujemne");
@@ -38,7 +51,8 @@ export const EditRecipe = () => {
 
       await updateDoc(recipeRef, {
         name: name,
-        description: description,
+        types: types,
+        // description: description,
         ingredients: ingredients,
         preparation: preparation,
         calories: calories,
@@ -50,7 +64,7 @@ export const EditRecipe = () => {
       toast.success("Zaktualizowano przepis w bazie danych");
       navigate("/display");
     } catch (error) {
-      toast.error(error.message);
+      toast.error("błąd z handle update: " + error.message);
     }
   };
 
@@ -80,18 +94,24 @@ export const EditRecipe = () => {
 
   return (
     <>
- 
       <div>Tutaj możesz edytować przepisy</div>
       <form onSubmit={handleUpdate}>
         <label htmlFor="name">Nazwa przepisu</label>
         <input type="text" name="name" id="name" defaultValue={recipe.name} />
 
-        <label htmlFor="description">Opis przepisu</label>
+        {/* <label htmlFor="description">Opis przepisu</label>
         <input
           type="text"
           name="description"
           id="description"
           defaultValue={recipe.description}
+        /> */}
+
+        <label htmlFor="types">Typy</label>
+        <Types
+          types={typesData}
+          selectedTypes={selectedTypes}
+          setSelectedTypes={setSelectedTypes}
         />
 
         <label htmlFor="ingredients">Składniki</label>
